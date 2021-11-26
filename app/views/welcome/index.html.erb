@@ -1,0 +1,92 @@
+<div class="container">
+  <% if user_signed_in? %>
+<h1 class='text-primary'>Hello,<%=current_user.username %></h1>
+<div>
+
+<%#debugger%>
+   <%#= url_for(current_user.avatar) %>
+  Logged in as <strong><%= current_user.email  %></strong>.<br><br>
+  <%= link_to 'Edit user', edit_user_registration_path, :class => 'navbar-link', class:'badge badge-light mt-3' %> 
+  
+  <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link' ,class:'badge badge-light mt-3' %>  
+   
+  
+  <% if current_user.avatars.attached? %>
+    <% current_user.avatars.each_with_index do |avatar,index| %>
+       <div class="row">
+          <div class="column">
+            <%= image_tag (avatar),width:"200px",height:"200px", onclick:"openModal();currentSlide(#{index+1})", class:"hover-shadow"%>
+          </div>
+       </div> 
+    <%end%> 
+  <%end%> 
+
+  
+ <div id="myModal" class="modal">
+  <span class="close cursor" onclick="closeModal()">&times;</span>
+    <div class="modal-content">
+      <% current_user.avatars.each_with_index do |avatar,index| %>
+      <div class="mySlides">
+          <div class="numbertext"><%= index+1%>/<%= current_user.avatars.count%></div>
+          <%= image_tag (avatar), width:400, height:400, class:"image_style"%>
+      </div>
+      <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+      <a class="next" onclick="plusSlides(1)">&#10095;</a>
+      <% end %>
+    </div>
+ </div>
+
+<% else %>
+<h1 class='text-primary'>Welcome to the blog</h1>
+  <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link',class:'btn btn-dark ml-2 '  %> |
+  <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  ,class: 'btn btn-dark ml-2'%>
+</div>
+<% end %>
+
+
+
+<script>
+// Open the Modal
+function openModal() {
+  document.getElementById("myModal").style.display = "block";
+}
+
+// Close the Modal
+function closeModal() {
+  document.getElementById("myModal").style.display = "none";
+}
+
+var slideIndex = 1;
+showSlides(slideIndex);
+
+// Next/previous controls
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+// Thumbnail image controls
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  debugger
+  var i;
+  var slides = document.getElementsByClassName("mySlides");
+  var dots = document.getElementsByClassName("demo");
+  var captionText = document.getElementById("caption");
+  debugger
+  if (n > slides.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
+  }
+
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block";
+  dots[slideIndex-1].className += " active";
+  captionText.innerHTML = dots[slideIndex-1].alt;
+}
+</script>

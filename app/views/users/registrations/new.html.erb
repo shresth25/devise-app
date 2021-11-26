@@ -1,0 +1,57 @@
+
+<div class="container">
+<h2>Sign up</h2>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name),multiple:true) do |f| %>
+  <%= render "users/shared/error_messages", resource: resource %>
+
+<div class="field">
+  <%= f.label :username,class:'mt-2' %>
+  <%= f.rich_text_area :username ,class:'mt-2 form-control w-25',placeholder:"Username"%>
+</div>
+  <div class="field">
+    <%= f.label :email,class:'mt-2 ' %>
+    <%= f.email_field :email, autofocus: true, autocomplete: "email",class:'mt-2 form-control w-25' ,placeholder:"email@xyz.com"%>
+  </div>
+  <div class="field border w-25 m-2">
+    <%=f.label :age ,class:'mt-2' %><br>
+   <%= check_box_tag(:age) %>
+   <%= label_tag(:age, "above 18") %>
+   <%= check_box_tag(:pet_cat) %>
+   <%= label_tag(:age, "below 18") %>
+  </div>
+  <div class="field border w-25 m-2">
+    <%=f.label :Citizenship  %><br>
+   <%= f.label :citizenship, "Indian" %>
+   <%= f.radio_button :citizenship, "Indian" %>
+   <%= f.label :citizenship, "Other" %>
+   <%= f.radio_button :citizenship, "Other" %>
+   
+  </div>
+
+  <div class="field">
+    <%= f.label :password ,class:'mt-2 '%>
+    <% if @minimum_password_length %>
+    <em>(<%= @minimum_password_length %> characters minimum)</em>
+    <% end %>
+    <%= f.password_field :password, autocomplete: "new-password",class:'mt-2 form-control w-25' %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password_confirmation,class:'mt-2' %>
+    <%= f.password_field :password_confirmation, autocomplete: "new-password",class:'mt-2 form-control w-25' %>
+  </div>
+
+  <div class="field">
+  <%= f.label :profile_photo ,class:'mt-2'%><br>
+  <%= f.file_field :avatars, multiple:true, class:'mt-2 btn btn-outline-dark w-25'%><br>
+</div><br>
+
+  <div class="actions">
+    <%= f.submit "Sign up",class:'mt-2 btn btn-outline-dark w-25' %>
+  </div>
+
+<% end %>
+
+<%= render "users/shared/links" %>
+</div>
